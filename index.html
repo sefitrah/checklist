@@ -161,7 +161,7 @@ function TapeBar({ pct, height = 10 }) {
   );
 }
 
-function Header({ eyebrow, title, onBack }) {
+function Header({ eyebrow, roleName, title, onBack }) {
   return (
     <div style={{ marginBottom: 20 }}>
       {onBack && (
@@ -170,7 +170,19 @@ function Header({ eyebrow, title, onBack }) {
           ← KEMBALI
         </button>
       )}
-      <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, letterSpacing: "0.12em", color: C.amber, marginBottom: 4 }}>{eyebrow}</div>
+      <div style={{ 
+         fontFamily: "'IBM Plex Mono', 
+         monospace", 
+         fontSize: 11, 
+         letterSpacing: "0.12em", 
+         color: C.amber, 
+         marginBottom: 4 
+     }}>
+         <div>{eventName}</div>
+         <div style={{ fontWeight: "bold", marginTop: 6 }}>
+          {roleName}
+         </div>
+    </div>
       <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 34, letterSpacing: "0.02em", color: C.ink, lineHeight: 1 }}>{title}</h1>
     </div>
   );
@@ -438,7 +450,12 @@ function App() {
     const stats = progressPct(role, progress);
     return (
       <Shell wide>
-        <Header eyebrow={`${live.name} — ${roleLabel(role)}`} title="Checklist tugas" onBack={() => setScreen("crew-role")} />
+        <Header 
+         eventName={live.name}
+         roleName={roleLabel(role)} 
+         title="Checklist tugas" 
+         onBack={() => setScreen("crew-role")} 
+         />
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontFamily: "'IBM Plex Mono', monospace", color: C.muted, marginBottom: 4 }}>
             <span>PROGRESS</span><span>{stats.done}/{stats.total} — {stats.pct}%</span>
