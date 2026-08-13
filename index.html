@@ -165,46 +165,17 @@ function Header({ eyebrow, title, onBack }) {
   return (
     <div style={{ marginBottom: 20 }}>
       {onBack && (
-        <button
-          onClick={onBack}
-          style={{
-            background: "none",
-            border: "none",
-            color: C.muted,
-            fontSize: 13,
-            fontFamily: "'IBM Plex Mono', monospace",
-            cursor: "pointer",
-            padding: 0,
-            marginBottom: 14
-          }}
-        >
+        <button onClick={onBack} style={{ background: "none", border: "none", color: C.muted, fontSize: 13,
+          fontFamily: "'IBM Plex Mono', monospace", cursor: "pointer", padding: 0, marginBottom: 14 }}>
           ← KEMBALI
         </button>
       )}
-
-      <div style={{
-        fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: 11,
-        letterSpacing: "0.12em",
-        color: C.amber,
-        marginBottom: 4
-      }}>
-        {eyebrow}
-      </div>
-
-      <h1 style={{
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: 34,
-        letterSpacing: "0.02em",
-        color: C.ink,
-        lineHeight: 1
-      }}>
-        {title}
-      </h1>
+      <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, letterSpacing: "0.12em", color: C.amber, marginBottom: 4 }}>{eyebrow}</div>
+      <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 34, letterSpacing: "0.02em", color: C.ink, lineHeight: 1 }}>{title}</h1>
     </div>
   );
 }
- 
+
 function Btn({ children, onClick, variant = "primary", style = {} }) {
   const base = { fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, letterSpacing: "0.06em", padding: "10px 16px",
     border: `1px solid ${C.ink}`, cursor: "pointer" };
@@ -249,8 +220,7 @@ function PinGate({ eventName, onSubmit, onBack, error }) {
       style={{
         width: 120,
         display: "block",
-        margin: "0 auto 32px",
-        cursor: "pointer"
+        margin: "0 auto 32px"
       }}
     />
      
@@ -467,23 +437,7 @@ function App() {
     const stats = progressPct(role, progress);
     return (
       <Shell wide>
-        <Header
-         eyebrow={
-          <>
-            <div>{live.name}</div>
-            <div style={{ fontWeight: "bold", marginTop: 6 }}>
-              {roleLabel(role)}
-           </div>
-         </>
-       }
-       title="Checklist tugas"
-       onBack={() => setScreen("crew-role")}
-     />
-         eventName={live.name}
-         roleName={roleLabel(role)} 
-         title="Checklist tugas" 
-         onBack={() => setScreen("crew-role")} 
-         />
+        <Header eyebrow={`${live.name} — ${roleLabel(role)}`} title="Checklist tugas" onBack={() => setScreen("crew-role")} />
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontFamily: "'IBM Plex Mono', monospace", color: C.muted, marginBottom: 4 }}>
             <span>PROGRESS</span><span>{stats.done}/{stats.total} — {stats.pct}%</span>
