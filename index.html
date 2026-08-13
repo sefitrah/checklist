@@ -205,7 +205,26 @@ function PinGate({ eventName, onSubmit, onBack, error }) {
 }
 
    const Shell = ({ children, wide }) => (
-    <div style={{ background: C.paper, minHeight: "100vh", padding: 24, maxWidth: wide ? 760 : 480, margin: "0 auto" }}>{children}</div>
+    <div style={{ 
+     background: C.paper, 
+     minHeight: "100vh", 
+     padding: 24, 
+     maxWidth: wide ? 760 : 480, 
+     margin: "0 auto" 
+    }}>
+     
+    <img
+      src="https://github.com/sefitrah/checklist/blob/main/Logo%20Sefitrah-14.png"
+      alt="Sefitrah"
+      style={{
+        width: 120,
+        display: "block",
+        margin: "0 auto 32px"
+      }}
+    />
+     
+     {children}
+    </div>
   );
  
 function App() {
