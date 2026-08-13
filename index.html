@@ -204,6 +204,10 @@ function PinGate({ eventName, onSubmit, onBack, error }) {
   );
 }
 
+   const Shell = ({ children, wide }) => (
+    <div style={{ background: C.paper, minHeight: "100vh", padding: 24, maxWidth: wide ? 760 : 480, margin: "0 auto" }}>{children}</div>
+  );
+ 
 function App() {
   const [screen, setScreen] = useState("home");
   const [eventsList, setEventsList] = useState([]);
@@ -289,9 +293,7 @@ function App() {
     else goPinGate(eventId, "leader", target);
   };
 
-  const Shell = ({ children, wide }) => (
-    <div style={{ background: C.paper, minHeight: "100vh", padding: 24, maxWidth: wide ? 760 : 480, margin: "0 auto" }}>{children}</div>
-  );
+
 
   if (screen === "home") {
     return (
