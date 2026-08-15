@@ -45,8 +45,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 // ==============================================================
 
-const PHASES = ["Persiapan", "Akad", "Resepsi", "Closing"];
-const PHASE_CODE = { Persiapan: "PREP", Akad: "AKAD", Resepsi: "RESP", Closing: "CLSE" };
+const PHASES = ["H-1", "Persiapan", "Akad", "Resepsi", "Closing"];
+const PHASE_CODE = { "H-1": "H-1", Persiapan: "PREP", Akad: "AKAD", Resepsi: "RESP", Closing: "CLSE" };
 const C = {
   ink: "#211F1C", paper: "#DFF1EF", card: "#FFFDF8", line: "#DBD4C4", lineStrong: "#B9B099",
   muted: "#8A8172", green: "#2F6B4A", greenBg: "#E4EEE5", amber: "#B8752A", amberBg: "#F5E9D8",
@@ -56,72 +56,84 @@ const C = {
 // ====================== TEMPLATE DEFAULT ROLE ======================
 const TEMPLATE = [
   { title: "Leader / Koorlap", person: "Amanda", items: {
+    "H-1": ["Konfirmasi kehadiran seluruh vendor untuk besok", "Cross-check rundown final dengan Event Coordinator", "Pastikan semua pembayaran vendor tidak ada yang tertunda", "Briefing terakhir seluruh tim WO", "Cek prakiraan cuaca H-1", "Pastikan kontak darurat semua PIC sudah lengkap"],
     Persiapan: ["Koordinasi semua vendor", "Briefing WO team", "Cek kesiapan dekor, catering, sound, dokumentasi", "Kontak koordinator keluarga", "Cek cuaca & siapkan rencana cadangan indoor/outdoor", "Konfirmasi pelunasan vendor sebelum hari H", "Review rundown final bersama seluruh tim"],
     Akad: ["Monitor jalannya rundown", "Backup stage manager", "Pastikan semua pengisi acara ready", "Handle kendala mendadak", "Pantau waktu mulai vs jadwal, siapkan penyesuaian jika molor"],
     Resepsi: ["Kontrol flow acara tetap on time", "Koordinasi MC & semua tim", "Pastikan tamu flow lancar", "Jadi decision maker untuk keputusan mendadak (venue, cuaca, teknis)"],
     Closing: ["Pastikan semua barang clear", "Final check seluruh tim", "Final check berita acara, pastikan serah terima terdokumentasi", "Pimpin evaluasi singkat tim sebelum bubar", "Pastikan pembayaran vendor on-site (jika ada) selesai"],
   }},
   { title: "Groom Assist", person: "Rafi", items: {
+    "H-1": ["Konfirmasi ulang ke CPP soal barang bawaan (cincin, mahar, baju ganti)", "Cek kesiapan groomsmen", "Reminder CPP istirahat cukup malam ini", "Konfirmasi waktu & titik jemput besok pagi"],
     Persiapan: ["Perkenalan ke CPP & keluarga", "Cek mahar (jumlah & bentuk)", "Cek cincin nikah", "Cek seserahan simbolis", "Reminder CPP bawa cincin & mahar", "Reminder HP silent & alarm dimatikan saat acara", "Reminder sarapan dan minum air", "Reminder tarik napas, jangan terburu-buru saat ijab", "Reminder bawa baju & sepatu ganti dalam 1 tas", "Reminder bawa sepatu pantofel/selop sesuai attire", "Reminder bawa obat-obatan pribadi", "Pastikan semua rombongan siap", "Koordinasi waktu berangkat", "Update ke WO posisi CPP", "Pastikan sesi foto CPP & keluarga langsung setelah tiba di venue", "Briefing keluarga CPP soal alur barisan", "Briefing & trial pengalungan melati sampai duduk", "Pastikan keluarga CPP tidak mendekat gedung sebelum dipanggil", "Tandai pemegang mahar, cincin, dan seserahan simbolis", "Info seserahan dipangku dulu sebelum diserahkan", "Jelaskan prioritas kursi dalam gedung untuk keluarga inti, sesepuh, pemegang seserahan", "Brief CPP soal pengalungan melati, salam namaste ke ibu CPW, posisi duduk, alur ijab kabul", "Reminder CPP jawab ijab jelas, tempo pas, fokus ke penghulu, gerakan tidak terburu-buru", "Cek kondisi emosional CPP, bantu tenangkan jika gugup", "Pastikan hidrasi CPP terjaga sebelum masuk akad"],
     Akad: ["Dampingi CPP ke meja akad", "Pastikan mahar siap di tempat", "Pastikan mic sudah on", "Monitor kelancaran ijab"],
     Resepsi: ["Brief entrance resepsi", "Pastikan CPP siap (attire, posisi)", "Dampingi selama acara", "Ingatkan CPP jadwal sholat/istirahat sejenak jika perlu"],
     Closing: ["Pastikan CPP sudah makan", "Pastikan CPP tidak kelelahan", "Pastikan semua barang aman", "Bantu CPP ganti pakaian pulang jika diperlukan"],
   }},
   { title: "Bride Assist", person: "Atha", items: {
+    "H-1": ["Konfirmasi jadwal makeup & hair besok pagi", "Cek kelengkapan gaun, veil, aksesoris sudah di venue/hotel", "Reminder CPW istirahat cukup, jangan begadang", "Konfirmasi kehadiran bridesmaids besok"],
     Persiapan: ["Perkenalan ke CPW sebagai Bride Assist", "Konfirmasi henna", "Konfirmasi sepatu/heels", "Konfirmasi aksesoris lainnya", "Briefing jam kehadiran bridesmaids", "Reminder CPW wajib sarapan & minum air", "Reminder jangan begadang", "Reminder keep calm & enjoy moment", "Reminder senyum", "Siapkan baju & sepatu ganti dalam 1 tas", "Reminder bawa obat-obatan pribadi", "Tanya apa yang bisa WO lakukan agar CPW lebih nyaman", "Brief CPW soal timing masuk, alur entrance sampai duduk, prosesi doa pengantin, jangan terburu-buru untuk dokumentasi", "Brief bridesmaids soal timing masuk, alur entrance, tugas bridesmaids, jangan ajak CPW ngobrol saat ijab", "Koordinasi dengan bridesmaid", "Koordinasi dengan keluarga", "Siapkan emergency kit (peniti, double tape, tisu, bedak tabur)", "Cek jadwal touch-up makeup/hair selama acara"],
     Akad: ["Cue masuk sesuai musik", "Rapikan gaun", "Rapikan veil", "Pastikan langkah stabil", "Standby di area tunggu", "Buat barikade dengan bridesmaid agar CPW fokus dengar khutbah", "Monitor emosi/nervous CPW", "Siap bantu jika ada kendala", "Siapkan tisu jika CPW berkeringat", "Usahakan CPW tidak menangis sebelum entrance", "Arahkan sungkeman", "Arahkan sesi foto", "Arahkan tukar cincin", "Temani proses foto couple hingga selesai"],
     Resepsi: ["Brief entrance resepsi", "Dampingi CPW di pelaminan", "Reminder senyum ke tamu", "Reminder jaga posture", "Bantu atur gaun/train saat CPW berpindah posisi atau foto"],
     Closing: ["Pastikan CPW sudah makan", "Pastikan CPW tidak kelelahan", "Bantu ganti attire jika perlu"],
   }},
   { title: "Bride Family Liaison", person: "Insani", items: {
+    "H-1": ["Konfirmasi kehadiran keluarga inti & besar besok", "Cross-check daftar VIP family dengan Leader", "Pastikan logistik saweran sudah siap", "Briefing terakhir ke keluarga soal jam kumpul"],
     Persiapan: ["Koordinasi dengan keluarga CPW inti & besar", "Ambil logistik saweran, serahkan ke Event Coordinator", "Briefing & trial prosesi pengalungan dan penyambutan CPP", "Arahan keluarga besar berdiri kanan-kiri saat pengalungan", "Identifikasi keluarga inti", "Identifikasi VIP family jika ada", "Identifikasi saksi keluarga CPW", "Briefing sambutan keluarga CPW maksimal 5 menit", "Identifikasi PIC barang berharga dan catering", "Pastikan semua keluarga tahu rundown", "Pastikan semua tahu posisi masing-masing", "Koordinasi dengan Bride Assist", "Koordinasi dengan Leader WO", "Catat kontak darurat keluarga inti"],
     Akad: ["Arahkan keluarga ke posisi masing-masing", "Pastikan wali siap", "Pastikan saksi & sambutan siap", "Koordinasi jika ada perubahan mendadak", "Standby tisu untuk keluarga inti saat sungkeman", "Standby kebutuhan keluarga inti", "Ambil dan serahkan bingkisan untuk pengisi khutbah", "Kumpulkan keluarga sesuai urutan sesi foto", "Pastikan tidak ada yang terlewat sesi foto", "Bantu percepat flow foto"],
     Resepsi: ["Pastikan keluarga siap entrance", "Pastikan keluarga tahu posisi di pelaminan", "Handle keluarga yang bingung", "Handle pergerakan naik/turun pelaminan", "Koordinasi keluarga untuk foto dengan tamu VIP", "Koordinasi keluarga bergantian di pelaminan"],
     Closing: ["Kumpulkan keluarga inti", "Pastikan barang berharga sudah aman", "Pastikan tidak ada yang tertinggal", "Koordinasi dengan PIC barang berharga", "Koordinasi dengan Leader WO"],
   }},
   { title: "Event Coordinator", person: "Fathya", items: {
+    "H-1": ["Konfirmasi kehadiran MC, penghulu, pengisi acara besok", "Cross-check ulang rundown detail dengan Leader", "Cek kesiapan mic & sound dengan vendor", "Siapkan cadangan skrip MC"],
     Persiapan: ["Perkenalan dan reminder jam kehadiran MC, khutbah, penghulu", "Cek mic & sound system", "Cek rundown detail", "Konfirmasi ulang durasi tiap sesi dengan MC"],
     Akad: ["Kontrol timing acara", "Cue MC setiap sesi", "Kontrol flow acara", "Koordinasi dengan leader terkait timing acara", "Catat realisasi waktu", "Siapkan logistik saweran"],
     Resepsi: ["Kontrol timing acara", "Cue entrance, games, bouquet", "Jaga alur tidak mundur", "Siapkan hand bouquet untuk lempar bouquet", "Siapkan hadiah-hadiah", "Siapkan skrip cadangan MC untuk kondisi darurat"],
     Closing: ["Pastikan closing berjalan rapi", "Rekap realisasi waktu vs rundown untuk evaluasi"],
   }},
   { title: "F&B Coordinator & Crowd Control", person: "Aisyah", items: {
+    "H-1": ["Konfirmasi jumlah porsi final dengan catering", "Cross-check menu dengan permintaan alergi/pantangan", "Cek jadwal delivery makanan besok"],
     Persiapan: ["Cek snack & coffee break", "Showing & tasting coffee break dengan keluarga", "Cek persiapan makanan resepsi", "Cek daftar tamu dengan alergi/pantangan makanan jika ada info dari keluarga"],
     Akad: ["Pastikan snack siap", "Monitor persiapan dan distribusi lunch box vendor"],
     Resepsi: ["Kontrol refill makanan", "Atur flow tamu makan", "Siapkan makanan untuk pengantin dan keluarga di stage maupun table", "Briefing singkat ke tim waiters soal prioritas area"],
     Closing: ["Serahkan sisa makanan ke keluarga dan catat di berita acara"],
   }},
   { title: "Documentation & Sound Coordinator", person: "Davin", items: {
+    "H-1": ["Cross-check peralatan (kamera, mic, baterai, memory card)", "Konfirmasi playlist & backsound final", "Briefing tim dokumentasi soal rundown foto"],
     Persiapan: ["Cek all mic & sound system", "Cek playlist & backsound", "Koordinasi rundown foto", "Brief tim dokumentasi", "Cek baterai cadangan dan kapasitas memory card/storage"],
     Akad: ["Siapkan 2 mic di meja akad", "Play backsound sesuai rundown", "Handle musik entrance CPW", "Handle foto akad", "Arahkan sesi foto keluarga"],
     Resepsi: ["Handle playlist music", "Pause saat sholat", "Koordinasi foto pelaminan", "Support sesi foto tamu", "Koordinasi sesi live streaming jika ada"],
     Closing: ["Pastikan semua momen tercover", "Shutdown equipment"],
   }},
   { title: "Gift & Items Coordinator", person: "Nida", items: {
+    "H-1": ["Cek stok souvenir sudah sesuai jumlah tamu", "Siapkan gentong & logistik", "Konfirmasi lokasi penyimpanan kado & amplop besok"],
     Persiapan: ["Siapkan gentong & logistik", "Koordinasi dengan keluarga"],
     Akad: ["Kunci gentong uang sebelum 07.00 WIB", "Hitung tamu akad (counter)", "Pastikan serah terima seserahan lancar", "Handle mahar, cincin & buku nikah selama sesi foto", "Serahkan mahar dan buku nikah ke PIC keluarga", "Drop seserahan ke mobil setelah selesai foto (dibantu keluarga)"],
     Resepsi: ["Brief penerima tamu", "Cek jumlah souvenir", "Jaga kado & amplop", "Monitor area penerimaan tamu", "Kontrol distribusi souvenir", "Siapkan buku tamu dan pastikan terisi rapi"],
     Closing: ["Serah terima ke keluarga", "Dokumentasi berita acara"],
   }},
   { title: "Stopper In", person: "Nida, Insani, Fathya", items: {
+    "H-1": [],
     Persiapan: ["Briefing posisi & jalur masuk tamu sebelum resepsi dimulai"],
     Akad: [],
     Resepsi: ["Arahkan tamu masuk", "Prioritaskan tamu VIP", "Kontrol antrian pelaminan", "Koordinasi dengan stopper out"],
     Closing: [],
   }},
   { title: "Stopper Out", person: "Atha, Amanda", items: {
+    "H-1": [],
     Persiapan: [],
     Akad: [],
     Resepsi: ["Arahkan tamu keluar", "Hindari penumpukan, arahkan ke stall jika buffet penuh", "Kontrol area buffet", "Bantu tamu yang kesulitan turun dari pelaminan"],
     Closing: [],
   }},
   { title: "PIC Wedding Tart", person: "Ami", items: {
+    "H-1": ["Cek kondisi kue jika sudah delivered di H-1", "Konfirmasi jadwal delivery kue ke venue", "Cross-check logistik alat potong"],
     Persiapan: ["Cek kondisi kue (bentuk, posisi, keamanan)", "Pastikan meja & display kue siap sebelum prosesi akad", "Cek logistik pisau kue", "Cek logistik gelas (2)", "Cek logistik server/spatula", "Cek logistik thinwall untuk spare sisa kue (simpan di belakang)", "Cek logistik sendok/garpu kecil", "Cek logistik tisu/lap"],
     Akad: ["Standby di area wedding tart", "Pastikan kue tidak tersentuh tamu", "Koordinasi dengan dekor & catering soal posisi kue", "Standby sebelum sesi potong kue dimulai", "Siapkan semua alat potong", "Bantu positioning kue jika diperlukan", "Setelah prosesi amankan kue kembali ke meja", "Jaga kue tetap aman sampai waktu pemotongan lanjut (sekitar 12.00)", "Monitor kondisi kue (tidak rusak/geser/kena tamu)"],
     Resepsi: ["Potong kue per slice", "Bagi kue 50:50 (CPP & CPW)", "Masukkan ke thinwall/wadah", "Koordinasi dengan PIC catering/keluarga"],
     Closing: ["Pastikan seluruh kue sudah terbagi", "Bersihkan area wedding tart", "Rapikan alat & logistik", "Pastikan tidak ada sisa berantakan"],
   }},
   { title: "PIC VIP", person: "", items: {
+    "H-1": ["Finalisasi daftar tamu VIP", "Konfirmasi kebutuhan khusus VIP (kursi, parkir, dsb) ke venue", "Briefing tim soal protokol escort"],
     Persiapan: ["Identifikasi daftar tamu VIP beserta signifikansinya (pejabat, tokoh, sesepuh)", "Koordinasi tempat duduk/parkir khusus VIP dengan venue", "Briefing protokol escort ke tim", "Siapkan welcome kit/name tag VIP jika ada", "Koordinasi dengan Bride Family Liaison soal VIP family"],
     Akad: ["Standby di titik penjemputan/lobby untuk VIP", "Escort VIP dari kendaraan ke venue", "Pastikan VIP diarahkan ke kursi/area khusus", "Flagging ke tim dokumentasi untuk framing foto VIP", "Koordinasi dengan Leader jika ada VIP datang mendadak di luar jadwal"],
     Resepsi: ["Dampingi VIP menuju pelaminan sesuai giliran", "Koordinasi dengan Stopper In/Out agar VIP tidak antre", "Pastikan VIP mendapat hidangan prioritas", "Standby untuk kebutuhan khusus VIP (kursi tambahan, penerjemah, dsb)"],
@@ -134,10 +146,10 @@ function buildDefaultRoles() {
     id: `r-${Date.now()}-${i}`,
     title: r.title,
     person: r.person,
-    items: { Persiapan: [...r.items.Persiapan], Akad: [...r.items.Akad], Resepsi: [...r.items.Resepsi], Closing: [...r.items.Closing] },
+    items: { "H-1": [...(r.items["H-1"] || [])], Persiapan: [...r.items.Persiapan], Akad: [...r.items.Akad], Resepsi: [...r.items.Resepsi], Closing: [...r.items.Closing] },
   }));
 }
-function emptyItems() { return { Persiapan: [], Akad: [], Resepsi: [], Closing: [] }; }
+function emptyItems() { return { "H-1": [], Persiapan: [], Akad: [], Resepsi: [], Closing: [] }; }
 function roleLabel(role) { return role.person ? `${role.title} — ${role.person}` : role.title; }
 
 function progressPct(role, progress) {
